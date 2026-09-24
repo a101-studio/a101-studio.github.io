@@ -1,0 +1,165 @@
+@import "tailwindcss";
+
+:root {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --ease-cinematic: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-cinematic: 500ms;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-instrument), "Instrument Serif", Georgia, serif;
+}
+
+html,
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+body {
+  font-family: var(--font-sans);
+  min-height: 100%;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.grade-storytelling {
+  filter: saturate(0.92) contrast(1.06) sepia(0.2) brightness(1.03);
+}
+
+.grade-light {
+  filter: saturate(1.42) contrast(1.22) hue-rotate(-6deg);
+}
+
+.grade-dreamlike {
+  filter: saturate(0.72) contrast(1.08) brightness(1.06) hue-rotate(10deg);
+}
+
+.triptych-panel {
+  flex-grow: 1;
+  opacity: 1;
+  transform: scale(1);
+  transition:
+    flex-grow var(--duration-cinematic) var(--ease-cinematic),
+    opacity var(--duration-cinematic) var(--ease-cinematic),
+    transform var(--duration-cinematic) var(--ease-cinematic);
+}
+
+.triptych-panel .panel-title,
+.triptych-panel .panel-tagline {
+  transition:
+    color var(--duration-cinematic) var(--ease-cinematic),
+    letter-spacing var(--duration-cinematic) var(--ease-cinematic),
+    opacity var(--duration-cinematic) var(--ease-cinematic);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .triptych:not(.is-opening):hover .triptych-panel {
+    flex-grow: 0.9;
+    opacity: 0.65;
+  }
+
+  .triptych:not(.is-opening) .triptych-panel:hover,
+  .triptych:not(.is-opening) .triptych-panel:focus-visible {
+    flex-grow: 1.25;
+    opacity: 1;
+  }
+
+  .triptych:not(.is-opening) .triptych-panel:hover .panel-title,
+  .triptych:not(.is-opening) .triptych-panel:focus-visible .panel-title {
+    color: #fff;
+    letter-spacing: 0.02em;
+  }
+
+  .triptych:not(.is-opening) .triptych-panel:hover .panel-tagline,
+  .triptych:not(.is-opening) .triptych-panel:focus-visible .panel-tagline {
+    color: rgb(255 255 255 / 0.85);
+  }
+}
+
+.triptych-panel.is-opening {
+  z-index: 10;
+  flex-grow: 3.2;
+  opacity: 1;
+  transform: scale(1.04);
+}
+
+.triptych-panel.is-hiding {
+  flex-grow: 0.01;
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .triptych-panel,
+  .triptych-panel .panel-title,
+  .triptych-panel .panel-tagline,
+  .gallery-page,
+  .gallery-card,
+  .lightbox-frame {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .triptych:not(.is-opening):hover .triptych-panel,
+  .triptych:not(.is-opening) .triptych-panel:hover,
+  .triptych-panel.is-opening,
+  .triptych-panel.is-hiding {
+    flex-grow: 1;
+    opacity: 1;
+    transform: none;
+  }
+
+  .panel-video {
+    display: none;
+  }
+}
+
+@keyframes gallery-enter {
+  from {
+    opacity: 0;
+    transform: scale(1.03);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.gallery-page {
+  animation: gallery-enter var(--duration-cinematic) var(--ease-cinematic) both;
+}
+
+.gallery-card {
+  animation: card-enter var(--duration-cinematic) var(--ease-cinematic) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gallery-page,
+  .gallery-card {
+    animation: none;
+  }
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: var(--duration-cinematic);
+  animation-timing-function: var(--ease-cinematic);
+}
