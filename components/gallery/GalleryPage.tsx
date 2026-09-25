@@ -15,21 +15,25 @@ export function GalleryPage({ pillarId }: GalleryPageProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <main className="gallery-page min-h-svh bg-background px-5 py-6 md:px-10 md:py-8">
-      <header className="mb-10 flex items-end justify-between gap-6">
-        <Logo withBack />
-        <div className="text-right">
-          <h1 className="font-display text-2xl md:text-3xl">{pillar.title}</h1>
-          <p className="mt-1 text-[11px] tracking-[0.22em] uppercase text-white/45">
-            {pillar.tagline}
-          </p>
-        </div>
-      </header>
+    <main className="gallery-page relative bg-background">
       <GalleryGrid
         images={pillar.images}
         gradeClass={pillar.grade}
+        pillarId={pillar.id}
         onOpen={setOpenIndex}
       />
+      <Logo
+        withBack
+        className="absolute top-4 left-4 z-40 text-white/85 drop-shadow-[0_1px_8px_rgb(0_0_0_/_0.55)]"
+      />
+      <p className="pointer-events-none absolute top-4 right-4 z-40 text-right">
+        <span className="block font-display text-lg leading-none text-white/90 drop-shadow-[0_1px_8px_rgb(0_0_0_/_0.55)] md:text-xl">
+          {pillar.title}
+        </span>
+        <span className="mt-1 block text-[10px] tracking-[0.22em] uppercase text-white/60">
+          {pillar.tagline}
+        </span>
+      </p>
       {openIndex != null ? (
         <Lightbox
           images={pillar.images}

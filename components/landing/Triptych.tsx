@@ -6,7 +6,7 @@ import { GrainVignette } from "@/components/landing/GrainVignette";
 import { PillarPanel } from "@/components/landing/PillarPanel";
 import { ViewCursor } from "@/components/landing/ViewCursor";
 import { cn } from "@/lib/cn";
-import { MOTION_MS, useFinePointer, useReducedMotion } from "@/lib/motion";
+import { useFinePointer, useReducedMotion } from "@/lib/motion";
 import { pillars, type Pillar } from "@/lib/pillars";
 
 export function Triptych() {
@@ -32,17 +32,21 @@ export function Triptych() {
 
     setOpeningId(pillar.id);
 
-    const navigate = () => router.push(pillar.href);
-    window.setTimeout(() => {
+    const navigate = () => {
+      const go = () => router.push(pillar.href);
       const doc = document as Document & {
         startViewTransition?: (update: () => void) => void;
       };
       if (doc.startViewTransition) {
-        doc.startViewTransition(navigate);
+        doc.startViewTransition(go);
         return;
       }
-      navigate();
-    }, MOTION_MS);
+      go();
+    };
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(navigate);
+    });
   };
 
   const hovering = Boolean(hoveredId) && !openingId && !reduced && finePointer;

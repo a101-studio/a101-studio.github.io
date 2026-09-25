@@ -27,8 +27,7 @@ export type Pillar = {
   images: GalleryImage[];
 };
 
-const GALLERY_SIZES =
-  "(min-width: 1024px) 28vw, (min-width: 640px) 30vw, 44vw";
+const GALLERY_SIZES = "33vw";
 
 function galleryImages(id: PillarId, title: string): GalleryImage[] {
   return Array.from({ length: 9 }, (_, index) => {

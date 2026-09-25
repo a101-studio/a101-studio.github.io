@@ -2,46 +2,56 @@
 
 import { useState } from "react";
 import { cn } from "@/lib/cn";
-import { useReducedMotion } from "@/lib/motion";
-import type { GalleryImage } from "@/lib/pillars";
+import type { GalleryImage, PillarId } from "@/lib/pillars";
+
+const CENTER_INDEX = 4;
 
 type GalleryGridProps = {
   images: GalleryImage[];
   gradeClass: string;
+  pillarId: PillarId;
   onOpen: (index: number) => void;
 };
 
-export function GalleryGrid({ images, gradeClass, onOpen }: GalleryGridProps) {
-  const reduced = useReducedMotion();
-
+export function GalleryGrid({
+  images,
+  gradeClass,
+  pillarId,
+  onOpen,
+}: GalleryGridProps) {
   return (
-    <ul className="grid grid-cols-3 gap-4 md:gap-6">
-      {images.map((image, index) => (
-        <li
-          key={image.id}
-          className="gallery-card"
-          style={reduced ? undefined : { animationDelay: `${index * 40}ms` }}
-        >
-          <GalleryCard
-            image={image}
-            eager={index < 3}
-            gradeClass={gradeClass}
-            onOpen={() => onOpen(index)}
-          />
-        </li>
-      ))}
+    <ul className="gallery-glass">
+      {images.map((image, index) => {
+        const isCenter = index === CENTER_INDEX;
+
+        return (
+          <li
+            key={image.id}
+            className="min-h-0 min-w-0 overflow-hidden"
+            style={
+              isCenter
+                ? { viewTransitionName: `pillar-${pillarId}` }
+                : undefined
+            }
+          >
+            <GalleryCard
+              image={image}
+              gradeClass={gradeClass}
+              onOpen={() => onOpen(index)}
+            />
+          </li>
+        );
+      })}
     </ul>
   );
 }
 
 function GalleryCard({
   image,
-  eager,
   gradeClass,
   onOpen,
 }: {
   image: GalleryImage;
-  eager: boolean;
   gradeClass: string;
   onOpen: () => void;
 }) {
@@ -51,7 +61,7 @@ function GalleryCard({
     <button
       type="button"
       onClick={onOpen}
-      className="group relative block aspect-[4/5] w-full overflow-hidden bg-white/5"
+      className="group relative block h-full w-full overflow-hidden bg-background"
       aria-label={image.alt}
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -67,17 +77,19 @@ function GalleryCard({
           alt={image.alt}
           width={image.width}
           height={image.height}
-          loading={eager ? "eager" : "lazy"}
+          loading="eager"
           decoding="async"
           onLoad={() => setLoaded(true)}
           className={cn(
-            "relative h-full w-full object-cover transition-opacity duration-500",
+            "relative h-full w-full object-cover transition-[opacity,transform] duration-500",
+            "group-hover:scale-[1.035]",
             gradeClass,
             loaded ? "opacity-100" : "opacity-0",
           )}
         />
       </picture>
-      <span className="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-500 group-hover:bg-black/10" />
+      <span className="glass-sheen pointer-events-none absolute inset-0" />
+      <span className="pointer-events-none absolute inset-0 bg-white/0 transition-colors duration-500 group-hover:bg-white/5" />
     </button>
   );
 }

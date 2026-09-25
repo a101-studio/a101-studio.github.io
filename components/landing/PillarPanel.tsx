@@ -38,6 +38,11 @@ export function PillarPanel({
         opening && "is-opening",
         hiding && "is-hiding",
       )}
+      style={
+        opening
+          ? { viewTransitionName: `pillar-${pillar.id}` }
+          : undefined
+      }
     >
       <MediaVideo
         webm={pillar.hero.webm}
