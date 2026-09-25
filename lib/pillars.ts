@@ -49,20 +49,6 @@ function galleryImages(id: PillarId, title: string): GalleryImage[] {
 
 export const pillars: Pillar[] = [
   {
-    id: "storytelling",
-    href: "/storytelling/",
-    title: "Unique Storytelling",
-    shortTitle: "Storytelling",
-    tagline: "Moments caught mid-motion",
-    grade: "grade-storytelling",
-    hero: {
-      webm: "/assets/storytelling/hero.webm",
-      mp4: "/assets/storytelling/hero.mp4",
-      poster: "/assets/storytelling/poster.webp",
-    },
-    images: galleryImages("storytelling", "Unique Storytelling"),
-  },
-  {
     id: "light",
     href: "/light/",
     title: "Playing with Light",
@@ -75,6 +61,20 @@ export const pillars: Pillar[] = [
       poster: "/assets/light/poster.webp",
     },
     images: galleryImages("light", "Playing with Light"),
+  },
+  {
+    id: "storytelling",
+    href: "/storytelling/",
+    title: "Unique Storytelling",
+    shortTitle: "Storytelling",
+    tagline: "Moments caught mid-motion",
+    grade: "grade-storytelling",
+    hero: {
+      webm: "/assets/storytelling/hero.webm",
+      mp4: "/assets/storytelling/hero.mp4",
+      poster: "/assets/storytelling/poster.webp",
+    },
+    images: galleryImages("storytelling", "Unique Storytelling"),
   },
   {
     id: "dreamlike",
