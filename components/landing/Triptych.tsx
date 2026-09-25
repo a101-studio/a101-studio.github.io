@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { GrainVignette } from "@/components/landing/GrainVignette";
 import { PillarPanel } from "@/components/landing/PillarPanel";
 import { ViewCursor } from "@/components/landing/ViewCursor";
+import { HeaderLink } from "@/components/shared/HeaderLink";
 import { cn } from "@/lib/cn";
 import { useFinePointer, useReducedMotion } from "@/lib/motion";
 import { pillars, type Pillar } from "@/lib/pillars";
@@ -17,9 +18,11 @@ export function Triptych() {
   const [openingId, setOpeningId] = useState<string | null>(null);
 
   useEffect(() => {
-    pillars.forEach((pillar) => {
-      router.prefetch(pillar.href);
-    });
+    ["/about/", "/book/", ...pillars.map((pillar) => pillar.href)].forEach(
+      (href) => {
+        router.prefetch(href);
+      },
+    );
   }, [router]);
 
   const openPillar = (pillar: Pillar) => {
@@ -53,9 +56,13 @@ export function Triptych() {
 
   return (
     <main className="relative h-svh overflow-hidden bg-background">
-      <p className="pointer-events-none absolute top-5 left-1/2 z-30 -translate-x-1/2 text-[10px] tracking-[0.42em] uppercase text-white/55">
-        A101 Studio
-      </p>
+      <header className="absolute inset-x-0 top-0 z-40 flex items-center justify-between px-5 pt-5 md:px-8">
+        <HeaderLink href="/about/">About</HeaderLink>
+        <p className="pointer-events-none text-[10px] tracking-[0.42em] uppercase text-white/55">
+          A101 Studio
+        </p>
+        <HeaderLink href="/book/">Book</HeaderLink>
+      </header>
       <div
         className={cn(
           "triptych flex h-full w-full flex-col md:flex-row",
