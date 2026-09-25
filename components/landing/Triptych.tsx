@@ -18,7 +18,7 @@ export function Triptych() {
   const [openingId, setOpeningId] = useState<string | null>(null);
 
   useEffect(() => {
-    ["/about/", "/book/", ...pillars.map((pillar) => pillar.href)].forEach(
+    ["/about/", "/contact/", ...pillars.map((pillar) => pillar.href)].forEach(
       (href) => {
         router.prefetch(href);
       },
@@ -56,12 +56,13 @@ export function Triptych() {
 
   return (
     <main className="relative h-svh overflow-hidden bg-background">
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-30 h-32 bg-gradient-to-b from-black/75 to-transparent" />
       <header className="absolute inset-x-0 top-0 z-40 flex items-center justify-between px-5 pt-5 md:px-8">
-        <HeaderLink href="/about/">About</HeaderLink>
-        <p className="pointer-events-none text-[10px] tracking-[0.42em] uppercase text-white/55">
+        <HeaderLink href="/about/">About us</HeaderLink>
+        <p className="pointer-events-none text-xs tracking-[0.28em] uppercase text-white md:text-sm drop-shadow-[0_2px_10px_rgb(0_0_0_/_0.85)]">
           A101 Studio
         </p>
-        <HeaderLink href="/book/">Book</HeaderLink>
+        <HeaderLink href="/contact/">Contact</HeaderLink>
       </header>
       <div
         className={cn(

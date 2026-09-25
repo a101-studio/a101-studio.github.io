@@ -13,7 +13,7 @@ export function HeaderLink({ href, children, className }: HeaderLinkProps) {
     <Link
       href={href}
       className={cn(
-        "text-[10px] tracking-[0.32em] uppercase text-white/70 drop-shadow-[0_1px_8px_rgb(0_0_0_/_0.55)] transition-colors duration-300 hover:text-white",
+        "text-xs tracking-[0.22em] uppercase text-white md:text-sm drop-shadow-[0_2px_10px_rgb(0_0_0_/_0.85)] transition-colors duration-300 hover:text-white/80",
         className,
       )}
     >
